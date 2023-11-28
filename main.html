@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Budget Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <style>
+    body,html{
+       
+        background-image: url('https://images.squarespace-cdn.com/content/v1/52e31194e4b09261a16b7bab/1465014159953-AHX5BNBKBNEP6W97O9FW/Loan-Calculator-1.jpg?format=1500w');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+    }
+    
+</style>
+ 
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Income</h3>
+        <div class="mb-3">
+          <label for="incomeType" class="form-label">Type of Income</label>
+          <input type="text" class="form-control" id="incomeType" placeholder="Income Type">
+        </div>
+        <div class="mb-3">
+          <label for="incomeAmount" class="form-label">Amount</label>
+          <input type="number" class="form-control" id="incomeAmount" placeholder="Amount">
+        </div>
+        <button class="btn btn-primary" onclick="addIncome()">Add Income</button>
+        <h4 class="text-primary mt-4">Total Income: <span id="totalIncome">0</span></h4>
+      </div>
+      <div class="col-md-6">
+        <h3>Expenses</h3>
+        <div class="mb-3">
+          <label for="expenseType" class="form-label">Type of Expense</label>
+          <input type="text" class="form-control" id="expenseType" placeholder="Expense Type">
+        </div>
+        <div class="mb-3">
+          <label for="expenseAmount" class="form-label">Amount</label>
+          <input type="number" class="form-control" id="expenseAmount" placeholder="Amount">
+        </div>
+        <button class="btn btn-danger" onclick="addExpense()">Add Expense</button>
+        <h4 class="text-danger mt-4">Total Expenses: <span id="totalExpense">0</span></h4>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col">
+        <h3>Budget Summary</h3>
+        <h4>Net Balance: <span id="netBalance">0</span></h4>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve saved values from localStorage if they exist
+    let incomeTotal = localStorage.getItem('incomeTotal') || 0;
+    let expenseTotal = localStorage.getItem('expenseTotal') || 0;
+
+    // Update UI with retrieved values
+    document.getElementById('totalIncome').textContent = incomeTotal;
+    document.getElementById('totalExpense').textContent = expenseTotal;
+    updateNetBalance();
+
+    function addIncome() {
+      const incomeAmount = parseFloat(document.getElementById('incomeAmount').value) || 0;
+      incomeTotal += incomeAmount;
+      document.getElementById('totalIncome').textContent = incomeTotal;
+      localStorage.setItem('incomeTotal', incomeTotal);
+      updateNetBalance();
+    }
+
+    function addExpense() {
+      const expenseAmount = parseFloat(document.getElementById('expenseAmount').value) || 0;
+      expenseTotal += expenseAmount;
+      document.getElementById('totalExpense').textContent = expenseTotal;
+      localStorage.setItem('expenseTotal', expenseTotal);
+      updateNetBalance();
+    }
+
+    function updateNetBalance() {
+      const netBalance = incomeTotal - expenseTotal;
+      document.getElementById('netBalance').textContent = netBalance;
+    }
+  </script>
+</body>
+</html>
